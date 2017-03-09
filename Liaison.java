@@ -2,6 +2,8 @@ package trajetMetro;
 
 public class Liaison {
 	
+	private int A;
+	private int B;
 	private Station a;
 	private Station b;
 	private String ligne;
@@ -16,8 +18,11 @@ public class Liaison {
 		distance = Distance(a,b);
 	}
 	
-	
-	
+	public Liaison(int A, int B, double temps){
+		this.A = A;
+		this.B = B;
+		this.temps = temps;
+	}
 	
 	
 	
