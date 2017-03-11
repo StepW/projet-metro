@@ -31,7 +31,7 @@ import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
 public class Main2 {
  public static void main(String[] args) {
 		 
-		 //on cherche le fichier ‡ chercher
+		 //on cherche le fichier √† chercher
 		 String fichiernoms = "D:/JAVA/fichiers stations/nom station.txt";
 		 String fichiersommets = "D:/JAVA/fichiers stations/coordonnee sommet.txt";
 		 String fichierarcs = "D:/JAVA/fichiers stations/arc valeur temps.txt";
@@ -41,17 +41,17 @@ public class Main2 {
 		 File f3 = new File(fichierarcs);
 		 Scanner in = null;
 
-		 //on crÈÈ la liste des stations pour les sommets du graphe
+		 //on cr√©√© la liste des stations pour les sommets du graphe
 		ArrayList<Station> l = new ArrayList<Station>();
 		
 		
-		//on crÈÈ la liste des liaisons pour les arcs du graphe
+		//on cr√©√© la liste des liaisons pour les arcs du graphe
 		ArrayList<Liaison> a = new ArrayList<Liaison>();
 		
 
 
 		
-		 //on cherche les ÈlÈments dans le fichier texte et on les range dans une liste Array
+		 //on cherche les √©l√©ments dans le fichier texte et on les range dans une liste Array
 		
 		 try{
 			 //on appelle les fonctions pour appeler le fichier
@@ -71,11 +71,11 @@ public class Main2 {
 
 				while ((ligne=br1.readLine())!=null){
 
-					//le premier ÈlÈment d'une ligne ne doit pas commencer par ####
+					//le premier √©l√©ment d'une ligne ne doit pas commencer par ####
 					
 //					if(!ligne.startsWith("####")){
 //						
-//						//on extrait les donnÈes d'une ligne qui sont sÈparÈes par " "
+//						//on extrait les donn√©es d'une ligne qui sont s√©par√©es par " "
 
 						String[] st = ligne.split(" ", 2);
 						
@@ -85,18 +85,18 @@ public class Main2 {
 //							
 //							//on remplit la liste de sommets avec les objets stations
 
-						//on crÈÈ les variables pour les tests
+						//on cr√©√© les variables pour les tests
 						String nomStation = st[1].trim().toLowerCase();
 						int idStation = Integer.parseInt(st[0]);
 
-						//on crÈÈ une station test
+						//on cr√©√© une station test
 						Station v = null;
 						
 						
 						//on parcours la liste des stations en train de se remplir
 						
-						//on ajoute une condition pour vÈrifier si dans cette liste il y a des stations en double
-						//si oui, on incrÈmente la station en double dans la station test
+						//on ajoute une condition pour v√©rifier si dans cette liste il y a des stations en double
+						//si oui, on incr√©mente la station en double dans la station test
 						//et on sort de cette boucle
 						for(Station station : l){
 							if(station.getNom().equals(nomStation)){
@@ -105,7 +105,7 @@ public class Main2 {
 							}
 						}
 						
-						//on vÈrifie maintenant si la condition prÈcÈdente est remplie
+						//on v√©rifie maintenant si la condition pr√©c√©dente est remplie
 						//si oui, on ajoute la station dans la liste
 						//si non, on ajoute l'identifiant dans la liste de l'objet station
 						if(v == null){
@@ -127,14 +127,14 @@ public class Main2 {
 				while ((ligne=br2.readLine())!=null){
 					String[] st = ligne.split(" ");
 					
-					//on intËgre les ÈlÈments de la liste dans des variables
+					//on int√®gre les √©l√©ments de la liste dans des variables
 					int idStation = Integer.parseInt(st[0]);
 					int coordX = Integer.parseInt(st[1]);
 					int coordY = Integer.parseInt(st[2]);
 					
 					
-					//on parcours la liste et on vÈrifie dans la liste identifiants de la station
-					//lorsqu'un identifiant est reconnu, on attribut les coordonnÈes ‡ la station auquelle elle appartient
+					//on parcours la liste et on v√©rifie dans la liste identifiants de la station
+					//lorsqu'un identifiant est reconnu, on attribut les coordonn√©es √† la station auquelle elle appartient
 					
 					
 					for(Station station : l){	
@@ -210,11 +210,12 @@ public class Main2 {
 		 
 		 System.out.println();
 		 
+	 	//on cr√©√© un graphe qui va regrouper tout les √©l√©ments
 		 Graph<Station, Liaison> g = new DirectedSparseMultigraph<Station, Liaison>();
 		 
 		 
 		 
-			
+		
 		 for(Station station : l){
 			 g.addVertex((Station)station);
 		 }
@@ -260,107 +261,12 @@ public class Main2 {
 //		 ArrayList<Station> l2 = new ArrayList<Station>(mySet);
 
 		 
-//		 for(int i=0;i<l.size();i++){
-//			 System.out.println(l.get(i));
-//		 }
-		 
-		 
-		 
-//		 for(int i=0;i<l2.size();i++){
-//			 System.out.println(l2.get(i));
-//		 }
 
-		 //on crÈÈ un graphe qui va regrouper tout les ÈlÈments
+		 //on cr√©√© un graphe qui va regrouper tout les √©l√©ments
 
 		 
 //		 
 		 
-		 //on crÈÈ toutes les stations de la ligne 1
-//		 for(int i=0;i<l.size();i++){
-//			 g.addVertex((Station)l.get(i));
-//		 }
-		 
-
-		 
-		//on crÈÈ toutes les stations de la ligne 2
-//		 for(int i=0;i<a2.size();i++){
-//			 g.addVertex((Station)a2.get(i));
-//		 }
-		 
-
-		 
-//	        g.addEdge(new Liaison(l2.get(1),l2.get(2),"Ligne",12,12), l2.get(1), l2.get(2));
-		 
-//		 g.addVertex((Station)l2.get(1));
-
-	        
-
-			 
-		 
-		   //on crÈÈ toutes les liaisons de la ligne 1
-		 
-		 
-		 
-		 
-		 
-//			 for(int i=0;i<a1.size()-1;i++){
-//				 g.addEdge(new Liaison(a1.get(i),a1.get(i+1),
-//						" " + a1.get(i).getNom() + " --> " + a1.get(i+1).getNom() + " " ,12)
-//						 ,a1.get(i),a1.get(i+1));
-//				 g.addEdge(new Liaison(b1.get(i),b1.get(i+1),
-//							" " + b1.get(i).getNom() + " --> " + b1.get(i+1).getNom() + " " ,12)
-//							 ,b1.get(i),b1.get(i+1));
-//
-//			}
-//			 
-			 
-//			 for(int i=0;i<a2.size()-1;i++){
-//				 g.addEdge(new Liaison(a2.get(i),a2.get(i+1),
-//						" " + a2.get(i).getNom() + " --> " + a2.get(i+1).getNom() + " " ,12)
-//						 ,a2.get(i),a2.get(i+1));
-//				 g.addEdge(new Liaison(b2.get(i),b2.get(i+1),
-//							" " + b2.get(i).getNom() + " --> " + b2.get(i+1).getNom() + " " ,12)
-//							 ,b2.get(i),b2.get(i+1));
-//
-//			}
-			 
-
-			//on crÈÈ toutes les liaisons de la ligne 2
-
-			 
-			 
-			 
-//			 
-//			 for(int i=0;i<b1.size()-1;i++){
-//				 g.addEdge("b1-"+i,b1.get(i),b1.get(i+1),EdgeType.DIRECTED);
-//
-//			}
-	        
-			 
-//
-//			 for(int i=0;i<a1.size();i++){
-//				 System.out.println(a1.get(i));
-//			 }
-//			 System.out.println();
-//			 for(int i=0;i<a2.size();i++){
-//				 System.out.println(a2.get(i));
-//			 }
-//	        
-			 
-			 
-//		     System.out.println("The graph g = " + g.toString());
-		     
-//		     for(int i=0;i<l.size();i++){
-//		     System.out.println("Station = " + l.get(i));
-//		     }
-		     
-//		     for(int i=0;i<a.size();i++){
-//		     System.out.println("Liaison = " + a.get(i));
-//		     }
-		     		     		 
-//			 for(int i=0;i<=l2.size();i++){
-//				 System.out.println(l2.get(i));
-//			 }
 
 		     
 
@@ -415,7 +321,25 @@ public class Main2 {
 			                return (e.getNom());
 			            }
 			        });
+	 
+			        //graphique
 			        
+			        Transformer<Liaison,Paint> strokePaint = new Transformer<Liaison,Paint>() {
+			        	 public Paint transform(Liaison i) {
+			        	 return Color.RED;
+			        	 }
+			        	 }; 
+				      vv.getRenderContext().setEdgeDrawPaintTransformer(strokePaint);
+				      vv.getRenderContext().setArrowFillPaintTransformer(strokePaint);
+				      vv.getRenderContext().setArrowDrawPaintTransformer(strokePaint);
+				      
+				      Transformer<Station,Paint> vertexPaint = new Transformer<Station,Paint>() {
+				    	  public Paint transform(Station e) {
+				    	  return Color.BLUE;
+				    	  }
+				    	  }; 
+				    	  
+				    	  vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);			        
 			        
 			        
 //			        vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
@@ -438,21 +362,38 @@ public class Main2 {
 		      frame.pack();
 //		      frame.setVisible(true);       
 		      
-		      DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath(g);
-//		      ArrayList<Liaison> L = alg.getPath(l.get(1), l.get(2));
-		      Number dist = alg.getDistance(l.get(1), l.get(2));
+		     	DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Station, Liaison>(g,wtTransformer);
 		      
-//		      System.out.println(L);
+		      
+		      Scanner sc = new Scanner(System.in);
+		      
+		      System.out.println("D√©part : ");
+		      int i = sc.nextInt();
+		      System.out.println("Arriv√©e : ");
+		      int j = sc.nextInt();
+		      
+		      
+		      int b = 0;
+		      int c = 0;
+		      
+		      for(Station station : l){
+		    	  for(int id : station.getLid()){
+		    		  if(id == i){
+		    			  b = l.indexOf(station);
+		    		  }
+		    		  if(id == j){
+		    			  c = l.indexOf(station);
+		    		  }
+		    	  }
+		      }
+		      
+		      List<Liaison> L = alg.getPath(l.get(b), l.get(c));
+		      
+		      Number dist = alg.getDistance(l.get(b), l.get(c));
+		      
+		      System.out.println(L);
 		      System.out.println(dist);
 		      
-		      Dijkstra dijska = new Dijkstra(g);
-		      
-		      System.out.println(dijska);
-		      
-		      
-//		     
-		     
-		 
 
 	 }
 
