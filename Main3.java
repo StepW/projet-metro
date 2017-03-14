@@ -29,7 +29,7 @@ import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
 public class Main3 {
  public static void main(String[] args) {
 		 
-		 //on cherche le fichier à chercher
+		 //on cherche le fichier Ã  chercher
 		 String fichiernoms = "D:/JAVA/fichiers stations/nom station.txt";
 		 String fichiersommets = "D:/JAVA/fichiers stations/coordonnee sommet.txt";
 		 String fichierarcs = "D:/JAVA/fichiers stations/arc valeur temps.txt";
@@ -40,17 +40,17 @@ public class Main3 {
 		 File f3 = new File(fichierarcs);
 
 
-		 //on créé la liste des stations pour les sommets du graphe
+		 //on crÃ©Ã© la liste des stations pour les sommets du graphe
 		ArrayList<Station> l = new ArrayList<Station>();
 		
 		
-		//on créé la liste des liaisons pour les arcs du graphe
+		//on crÃ©Ã© la liste des liaisons pour les arcs du graphe
 		ArrayList<Liaison> a = new ArrayList<Liaison>();
 		
 
 
 		
-		 //on cherche les éléments dans le fichier texte et on les range dans une liste Array
+		 //on cherche les Ã©lÃ©ments dans le fichier texte et on les range dans une liste Array
 		
 		 try{
 			 //on appelle les fonctions pour appeler le fichier
@@ -70,11 +70,11 @@ public class Main3 {
 
 				while ((ligne=br1.readLine())!=null){
 
-					//le premier élément d'une ligne ne doit pas commencer par ####
+					//le premier Ã©lÃ©ment d'une ligne ne doit pas commencer par ####
 					
 //					if(!ligne.startsWith("####")){
 //						
-//						//on extrait les données d'une ligne en séparant les identifiants et le nom des stations
+//						//on extrait les donnÃ©es d'une ligne en sÃ©parant les identifiants et le nom des stations
 
 						String[] st = ligne.split(" ", 2);
 						
@@ -82,13 +82,13 @@ public class Main3 {
 
 //							
 //						//on remplit la liste de sommets avec les objets stations
-						//on créé les variables pour les tests
+						//on crÃ©Ã© les variables pour les tests
 						
 						String nomStation = st[1].trim().toLowerCase();
 						int idStation = Integer.parseInt(st[0]);
 
 
-						//on créé une station test
+						//on crÃ©Ã© une station test
 						
 						Station v = null;
 						
@@ -98,8 +98,8 @@ public class Main3 {
 						
 						//on parcours la liste des stations en train de se remplir
 						
-						//on ajoute une condition pour vérifier si dans cette liste il y a des stations en double
-						//si oui, on incrémente la station en double dans la station test
+						//on ajoute une condition pour vÃ©rifier si dans cette liste il y a des stations en double
+						//si oui, on incrÃ©mente la station en double dans la station test
 						//et on sort de cette boucle
 						
 						
@@ -110,7 +110,7 @@ public class Main3 {
 //							}
 //						}
 						
-						//on vérifie maintenant si la condition précédente est remplie
+						//on vÃ©rifie maintenant si la condition prÃ©cÃ©dente est remplie
 						//si oui, on ajoute la station dans la liste
 						//si non, on ajoute l'identifiant dans la liste de l'objet station
 //						if(v == null){
@@ -134,14 +134,14 @@ public class Main3 {
 					String[] st = ligne.split(" ");
 					
 					
-					//on intègre les éléments de la liste dans des variables pour le test suivant
+					//on intÃ¨gre les Ã©lÃ©ments de la liste dans des variables pour le test suivant
 					int idStation = Integer.parseInt(st[0]);
 					int coordX = Integer.parseInt(st[1]);
 					int coordY = Integer.parseInt(st[2]);
 					
 					
-					//on parcours la liste et on vérifie dans la liste identifiants de la station
-					//lorsqu'un identifiant est reconnu, on attribut les coordonnées à la station auquelle elle appartient
+					//on parcours la liste et on vÃ©rifie dans la liste identifiants de la station
+					//lorsqu'un identifiant est reconnu, on attribut les coordonnÃ©es Ã  la station auquelle elle appartient
 					
 					
 //					for(Station station : l){	
@@ -179,7 +179,7 @@ public class Main3 {
 					String[] st = ligne.split(" ");
 					
 					
-					//on intègre les éléments de la liste dans des variables pour le test suivant
+					//on intÃ¨gre les Ã©lÃ©ments de la liste dans des variables pour le test suivant
 					int sI = Integer.parseInt(st[0]);
 					int sF = Integer.parseInt(st[1]);
 					double tempsD = Double.parseDouble(st[2]);
@@ -187,16 +187,16 @@ public class Main3 {
 					
 
 					
-					//dans la première boucle for on parcourt la liste l qui contient toutes les stations
-					//dans la deuxième boucle for on parcourt la liste des identifiants d'une station
+					//dans la premiÃ¨re boucle for on parcourt la liste l qui contient toutes les stations
+					//dans la deuxiÃ¨me boucle for on parcourt la liste des identifiants d'une station
 					
-					//à ce moment on vérifie le numéro contenu dans la station correspondant au sommet initiale
+					//Ã  ce moment on vÃ©rifie le numÃ©ro contenu dans la station correspondant au sommet initiale
 //					for(Station station : l){
 //						for(int id : station.getLid()){
 //							if(id == sI){
 //								
 //								
-//								//quand la condition précédente est remplie, on fait la même opération
+//								//quand la condition prÃ©cÃ©dente est remplie, on fait la mÃªme opÃ©ration
 //								//avec le sommet final
 //								
 //								for(Station station2 : l){
@@ -218,7 +218,7 @@ public class Main3 {
 							if(station.getId() == sI){
 								
 								
-								//quand la condition précédente est remplie, on fait la même opération
+								//quand la condition prÃ©cÃ©dente est remplie, on fait la mÃªme opÃ©ration
 								//avec le sommet final
 								
 								for(Station station2 : l){
@@ -271,7 +271,7 @@ public class Main3 {
 
 		 // #############################################################################
 		 
-	 	//on créé un graphe qui va regrouper tout les éléments
+	 	//on crÃ©Ã© un graphe qui va regrouper tout les Ã©lÃ©ments
 		 Graph<Station, Liaison> g = new DirectedSparseMultigraph<Station, Liaison>();
 		 
 		 
@@ -290,10 +290,10 @@ public class Main3 {
 //			 System.out.println(liaison);
 		 
 		 
-		 //on ajoute ensuite les arcs à partir de la liste des liaisons
-		 //on créé une boucle qui va parcourir cette liste
+		 //on ajoute ensuite les arcs Ã  partir de la liste des liaisons
+		 //on crÃ©Ã© une boucle qui va parcourir cette liste
 		 //en lisant une liaison, on va parcourir la liste des station et dans une station...
-		 //...on va parcourir les identifiants de cette station qui correspond à un sommet du graphe
+		 //...on va parcourir les identifiants de cette station qui correspond Ã  un sommet du graphe
 		 
 		 
 //		 for(Liaison liaison : a){
@@ -303,13 +303,13 @@ public class Main3 {
 //					 //on cherche l'identifiant qui correspond au sommet initial de la liaison
 //					 if(identifiant == liaison.getA()){
 //						 
-//						//quand l'identifiant est trouvé, on fait la même opération pour le sommet final
+//						//quand l'identifiant est trouvÃ©, on fait la mÃªme opÃ©ration pour le sommet final
 //						 for(Station stat : l){
 //							 for(int ident : stat.getLid()){
 //								 if(ident == liaison.getB()){
 //									 
 //						//une fois le sommet initial et final, on va pouvoir ajouter un arc dans le graphe
-//						//on recommence jusqu'à ce que toute la liste des liaisons soit parcourue
+//						//on recommence jusqu'Ã  ce que toute la liste des liaisons soit parcourue
 //									 g.addEdge((Liaison)liaison,station,stat,EdgeType.DIRECTED);
 //									 break;
 //								 }
@@ -335,13 +335,13 @@ public class Main3 {
 					 //on cherche l'identifiant qui correspond au sommet initial de la liaison
 					 if(station.getId() == liaison.getA()){
 						 
-						//quand l'identifiant est trouvé, on fait la même opération pour le sommet final
+						//quand l'identifiant est trouvÃ©, on fait la mÃªme opÃ©ration pour le sommet final
 						 for(Station stat : l){
 
 								 if(stat.getId() == liaison.getB()){
 									 
 						//une fois le sommet initial et final, on va pouvoir ajouter un arc dans le graphe
-						//on recommence jusqu'à ce que toute la liste des liaisons soit parcourue
+						//on recommence jusqu'Ã  ce que toute la liste des liaisons soit parcourue
 									 g.addEdge((Liaison)liaison,station,stat,EdgeType.DIRECTED);
 									 break;
 								 }
@@ -370,17 +370,17 @@ public class Main3 {
 
 		 
 
-		 //on créé un graphe qui va regrouper tout les éléments
+		 //on crÃ©Ã© un graphe qui va regrouper tout les Ã©lÃ©ments
 
 		 
 //		 
 
 
-		    // nous allons maintenant générer une interface pour visualiser le graphe
-		 	// ce graphe correspond à un plan géométrique des liaisons et des stations de métro
+		    // nous allons maintenant gÃ©nÃ©rer une interface pour visualiser le graphe
+		 	// ce graphe correspond Ã  un plan gÃ©omÃ©trique des liaisons et des stations de mÃ©tro
 		 
-		 //à l'aide de la fonction Transformer, nous voulons placer les sommets
-		 //en fonction des coordonnées X et Y de de chaque station à partir d'objets Point 2D
+		 //Ã  l'aide de la fonction Transformer, nous voulons placer les sommets
+		 //en fonction des coordonnÃ©es X et Y de de chaque station Ã  partir d'objets Point 2D
 		 	Transformer<Station, Point2D> locationTransformer = new Transformer<Station, Point2D>() {
 
 		            @Override
@@ -475,15 +475,15 @@ public class Main3 {
 				          }
 				      };
 		      
-		      //on utilise un objet Djikstra pour calculer l'itinéraire le plus court entre deux stations 
+		      //on utilise un objet Djikstra pour calculer l'itinÃ©raire le plus court entre deux stations 
 		      DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Station, Liaison>(g,wtTransformer);
 		      
-		      //le scanner est utilisé pour écrire une chaine de caractères dans la console
+		      //le scanner est utilisÃ© pour Ã©crire une chaine de caractÃ¨res dans la console
 		      Scanner sc = new Scanner(System.in);
 		      
-//		      System.out.println("Départ : ");
+//		      System.out.println("DÃ©part : ");
 //		      int i = sc.nextInt();
-//		      System.out.println("Arrivée : ");
+//		      System.out.println("ArrivÃ©e : ");
 //		      int j = sc.nextInt();
 		      
 		      
@@ -493,14 +493,14 @@ public class Main3 {
 		      
 		      while(A.isEmpty() && L.isEmpty()){
 		    	  
-//		      System.out.println("Départ : ");
+//		      System.out.println("DÃ©part : ");
 //		      String m = sc.nextLine().trim();
-//		      System.out.println("Arrivée : ");
+//		      System.out.println("ArrivÃ©e : ");
 //		      String n = sc.nextLine().trim();
 		      
-		      System.out.println("Départ : ");
+		      System.out.println("DÃ©part : ");
 		      int M = sc.nextInt();
-		      System.out.println("Arrivée : ");
+		      System.out.println("ArrivÃ©e : ");
 		      int N = sc.nextInt();
 		      
 		      
@@ -626,7 +626,8 @@ public class Main3 {
 		      
 		      
 		      
-		      
+		  	L.add(l.get(k));
+    		  	L.get(0).setC(Color.blue);
 
 		      
 		      Station v = null;
@@ -665,9 +666,7 @@ public class Main3 {
 		      
 		      
 
-    		  L.get(0).setC(Color.blue);
 
-    		  L.add(l.get(0));
 
 
 
@@ -678,7 +677,7 @@ public class Main3 {
 		      
 		      System.out.println();
 		      
-	    	  System.out.println("Liaisons de l'itinéraire : ");
+	    	  System.out.println("Liaisons de l'itinÃ©raire : ");
 	    	  
 		      for(Liaison ligne : A){
 
@@ -686,7 +685,7 @@ public class Main3 {
 		      }
 		      
 		      System.out.println();
-	    	  System.out.println("Stations de l'itinéraire : ");  
+	    	  System.out.println("Stations de l'itinÃ©raire : ");  
 		      for(Station station : L){
 
 			      System.out.println(station);
