@@ -49,9 +49,11 @@ static Transformer<Station, Point2D> locationTransformer = new Transformer<Stati
         }
     };
 
-static Graph<Station, Liaison> g = new DirectedSparseMultigraph<Station, Liaison>();	        
-
-static StaticLayout<Station, Liaison> layout =
+ 	//on créé un graphe qui va regrouper tout les éléments
+	 static Graph<Station, Liaison> g = new DirectedSparseMultigraph<Station, Liaison>();
+	 
+     //nous voulons faire une mise en forme du graphe
+	 static StaticLayout<Station, Liaison> layout =
   new StaticLayout<Station, Liaison>(g, locationTransformer);
 
 static VisualizationViewer<Station,Liaison> vv = 
@@ -239,9 +241,7 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 				}
 			 
 				
-		 	//on créé un graphe qui va regrouper tout les éléments
-			 Graph<Station, Liaison> g = new DirectedSparseMultigraph<Station, Liaison>();
-			 
+
 			 
 			 
 			 //dans ce graphe on ajoute les sommets qui correspondent aux stations.
@@ -309,10 +309,8 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 //			        };
 			      
 			        
-			        //nous voulons faire une mise en forme du graphe
-			      StaticLayout<Station, Liaison> layout =
-			    		  new StaticLayout<Station, Liaison>(g, locationTransformer);
-				  layout.setSize(new Dimension(1000,1000));
+
+
 				  
 				  
 				     //puis nous insérons un module de visualisation du graphe
