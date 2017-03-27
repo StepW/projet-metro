@@ -39,42 +39,51 @@ import edu.uci.ics.jung.visualization.control.DefaultModalGraphMouse;
 import edu.uci.ics.jung.visualization.control.ModalGraphMouse;
 
 public class Main4 {
-	
-static Transformer<Station, Point2D> locationTransformer = new Transformer<Station, Point2D>() {
-		
-        @Override
-        public Point2D transform(Station vertex) {
-            return new Point2D.Double((double) vertex.getX()*2-100 ,
-            		(double) Math.abs(vertex.getY() - 600)*2-100 );
-        }
-    };
 
  	//on créé un graphe qui va regrouper tout les éléments
 	 static Graph<Station, Liaison> g = new DirectedSparseMultigraph<Station, Liaison>();
 	 
+	 //on place les stations qui correspondent aux sommets dans l'interface en fonction des coordonnées attribuées aux stations
+	 
+	 //à l'aide de la fonction Transformer, nous voulons placer les sommets
+	 //en fonction des coordonnées X et Y de de chaque station à partir d'objets Point 2D
+	 static Transformer<Station, Point2D> locationTransformer = new Transformer<Station, Point2D>() {
+			
+	        @Override
+	        public Point2D transform(Station vertex) {
+	            return new Point2D.Double((double) vertex.getX()*2-100 ,
+	            		(double) Math.abs(vertex.getY() - 600)*2-100 );
+	        }
+	    };
+	 
+	    
      //nous voulons faire une mise en forme du graphe
 	 static StaticLayout<Station, Liaison> layout =
-  new StaticLayout<Station, Liaison>(g, locationTransformer);
+		new StaticLayout<Station, Liaison>(g, locationTransformer);
+	 
+     //puis nous insérons un module de visualisation du graphe
+	 static VisualizationViewer<Station,Liaison> vv = 
+			 new VisualizationViewer<Station,Liaison>(layout);
 
-static VisualizationViewer<Station,Liaison> vv = 
-new VisualizationViewer<Station,Liaison>(layout);
+	 //la valeur de poids d'un arc ici, correspond au temps de trajet dans une liaison,
+	 //en effet dans ca graphe un arc correspond à une liaison entre deux stations de métro
+	 
+	 static Transformer<Liaison, Integer> wtTransformer = new Transformer<Liaison,Integer>() {
+		 public Integer transform(Liaison link) {
+			 return link.getTemps();
+		 }
+	 };
 
-static Transformer<Liaison, Integer> wtTransformer = new Transformer<Liaison,Integer>() {
-public Integer transform(Liaison link) {
-  return link.getTemps();
-}
-};
-
-static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Station, Liaison>(g,wtTransformer);
-   
-	static ArrayList<Station> l = new ArrayList<Station>();
-	
-	// constante importé
+	 //pour effectuer un calcul d'itinéraire, on utilise un algorithme de Dijkstra.
+	 //on l'utilisera sur le graphe des stations de métro
+	 static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Station, Liaison>(g,wtTransformer);
+   	
+	// ces valeurs seront plus tard utilisées pour l'interface graphique
 		private static JPanel container = new JPanel();
 		private static JPanel container1 = new JPanel();
 		  private static JComboBox<String> combo = new JComboBox<String>();
 		  private static JComboBox<String> combo2 = new JComboBox<String>();
-		  private static JLabel choix = new JLabel("Bienvenue, choisissez votre itinéraire");
+		  private static JLabel choix = new JLabel("Bienvenue, choisissez votre itinéraire :");
 		  private static JLabel debut = new JLabel("Départ :");
 		  private static JLabel fin = new JLabel("Arrivée :");
 		  
@@ -86,9 +95,6 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 		 private static JButton ajoutStationFerme = new JButton("Ajouter");
 		 private static JButton effacerListe = new JButton("Effacer");
 		 private static JComboBox<Integer> combof = new JComboBox<Integer>();
-	
-
-	
 	
  public static void main(String[] args) {
 		 
@@ -107,7 +113,7 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 
 
 			//-----------------------------------------------------------------------------
-			 //on cherche les éléments dans le fichier texte et on les range dans une liste Array
+			 //on cherche les éléments dans le fichier texte et on les range dans une liste Arraylist
 			
 			 try{
 				 //on appelle les fonctions pour appeler le fichier
@@ -127,17 +133,9 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 
 					while ((ligne=br1.readLine())!=null){
 
-						//le premier élément d'une ligne ne doit pas commencer par ####
-						
-//						if(!ligne.startsWith("####")){
-//							
 //							//on extrait les données d'une ligne en séparant les identifiants et le nom des stations
-
 							String[] st = ligne.split(" ", 2);
 							
-							//verificateur
-
-//								
 //							//on remplit la liste de sommets avec les objets stations
 							//on créé les variables pour les tests
 							
@@ -234,24 +232,18 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 					
 					br3.close();
 					
-					
 				}		
 				catch (Exception e){
 					System.out.println(e.toString());
 				}
-			 
-				
 
-			 
+			 //--------------------------------------------------------------------------------------------
 			 
 			 //dans ce graphe on ajoute les sommets qui correspondent aux stations.
 			 for(Station station : l){
 				 g.addVertex((Station)station);
 			 }
 			 
-			 
-			 
-
 			 
 			 
 			 /*on ajoute ensuite les arcs à partir de la liste des liaisons
@@ -297,25 +289,8 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 			    // nous allons maintenant générer une interface pour visualiser le graphe
 			 	// ce graphe correspond à un plan géométrique des liaisons et des stations de métro
 			 
-			 //à l'aide de la fonction Transformer, nous voulons placer les sommets
-			 //en fonction des coordonnées X et Y de de chaque station à partir d'objets Point 2D
-//			 	Transformer<Station, Point2D> locationTransformer = new Transformer<Station, Point2D>() {
-//
-//			            @Override
-//			            public Point2D transform(Station vertex) {
-//			                return new Point2D.Double((double) vertex.getX()*2-100 ,
-//			                		(double) Math.abs(vertex.getY() - 600)*2-100 );
-//			            }
-//			        };
-			      
-			        
 
-
-				  
-				  
-				     //puis nous insérons un module de visualisation du graphe
-				        VisualizationViewer<Station,Liaison> vv = 
-				                new VisualizationViewer<Station,Liaison>(layout);
+			 		//nouss indiquons une taille pour la fenetre
 				      vv.setPreferredSize(new Dimension(1000,800)); 
 				      
 				      
@@ -328,7 +303,7 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 				            }
 				        });
 		 
-				        //graphique
+
 				        
 					     //-------------------------------------------------------------------------------
 				        
@@ -364,7 +339,8 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 				      
 
 				        //on veut afficher le graphe dans une fenêtre
-				        JFrame frame = new JFrame("Itinéraire Métro Paris");
+				        //on donne les paramètre d'affichage
+				        JFrame frame = new JFrame("Itinéraire Métro de Paris");
 					      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					      frame.setSize(800, 800);
 					      frame.isResizable();
@@ -381,7 +357,7 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 					      
 					      JTextArea listeStations = new JTextArea(10,5);
 					      JTextArea result = new JTextArea(10,5);
-					      JTextArea statFerme = new JTextArea(10,5);
+					      JTextArea statFerme = new JTextArea(10,15);
 					      
 						      container1.setBackground(Color.white);
 							  container1.setLayout(new BorderLayout());
@@ -413,9 +389,7 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 							    top.add(bouton);
 							    
 							    res.setLayout(gridResult);
-							    fer.setLayout(gridStationFerme);
-							    
-//							  bouton.addActionListener(new ActionListener());
+							    fer.setLayout(gridStationFerme);		    
 							    
 							    roc.add(vv);
 							    
@@ -425,26 +399,16 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 							    fer.add(new JLabel("Stations fermées"));
 							    fer.add(combof);
 							    fer.add(ajoutStationFerme);
-							    fer.add(effacerListe);
-							    
+							    fer.add(effacerListe);				    
 							    
 							    res.add(stations);
 							    res.add(scrollpane1);
 							    res.add(resultats);
 							    res.add(scrollpane2);
-//							    bas.add(combof);
-//							    bas.add(ajoutStationFerme);
 							    bas.add(res);
 							    bas.add(fer);
 							    bas.add(statFerme);
-							    
-
-							    
-							    
-							    
-							    
-							    
-//							    scrollpane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+							    	    
 							    scrollpane1.setPreferredSize(new Dimension(250, 110));
 							    scrollpane2.setPreferredSize(new Dimension(250, 110));
 							    statFerme.setPreferredSize(new Dimension(100, 100));
@@ -452,22 +416,14 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 							    container.add(top, BorderLayout.NORTH);
 							    container.add(roc, BorderLayout.CENTER);
 							    container.add(bas, BorderLayout.SOUTH);
-//							    container.add(result,BorderLayout.EAST);
 							    texte.setHorizontalAlignment(JLabel.CENTER);
 
-							    
-							    
 							    listeStations.setLineWrap(true);
 							    listeStations.setEditable(false);
 							    listeStations.setWrapStyleWord(true);
 							   
-
 							    frame.setContentPane(container);
 							    frame.setVisible(true);
-							    
-//							    frame.setContentPane(container1);
-//							    frame.setVisible(true);
-							    
 							    
 							    ArrayList<String> listString = new ArrayList<String>();
 							    
@@ -491,30 +447,11 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 							    //fin creation de new fenetre
 					      
 					      
-					      
-					      Transformer<Liaison, Integer> wtTransformer = new Transformer<Liaison,Integer>() {
-					          public Integer transform(Liaison link) {
-					        		  return link.getTemps();
-					          }
-					      };
-					      
-
-					      
-//				    	  d = 0;
-//				    	  corr = 0;
-				    	  
-
-//				    	  Lcorr.clear();
-//				    	  
-//				    	  m = null;
-//				    	  n = null;
-//				    	  f = null;
-					      
 					      List<Station> FERME = new ArrayList<Station>();
 					      
 					      
 					      //nous devons aussi faire une liste des stations qui sont fermées,
-					      //on tape l'identifiant de la station
+					      //on indique l'identifiant de la station
 					      //les stations fermées influent sur l'itinéraire à tracer
 					      //le métro ne s'arrete pas au niveau des stations fermées
 					      //on ne peut pas effectuer de correspondance à partir de ces dernières
@@ -531,7 +468,7 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 							    			  FERME.add(station);
 							    			  station.setFerme(true);
 							    			  station.setC(Color.gray);
-							    			  statFerme.append(station.getNom() + " - " + station.getId() + "\n");
+							    			  statFerme.append(station.getId() + " - " + station.getNom() + "\n");
 							    		  }
 							    	  }
 					        		
@@ -542,7 +479,7 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 					        	}
 					      });
 					      
-					      
+					      //on a un bouton pour effacer la liste des stations fermées
 					      effacerListe.addActionListener(new ActionListener() {
 						   		
 					        	public void actionPerformed(ActionEvent e) {
@@ -572,7 +509,8 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 					        	}
 					      });
 					      
-					      
+					      //le bouton suivant sera utilisé pour calculer l'itinéraire après avoir choisi 
+					      // et de fin indiquées dans la fenetre
 					      bouton.addActionListener(new ActionListener() {
 						   		
 					        	public void actionPerformed(ActionEvent e) {
@@ -691,7 +629,6 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 			    	  if(station.getId() == A.get(0).getA()){
 			    		  L.add(station);
 			    		  L.get(0).setC(Color.blue);
-//			    		  result.setText(texte.getText() + " ==> " + station.getNom() + "\n");
 
 			    	  }
 			      }
@@ -721,32 +658,16 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 			      
 			    //----------------------------------------------------------------------------------
 
-			      System.out.println();
-			      
-			      //on affiche la liste des liaisons
-		    	  System.out.println("Liaisons de l'itinéraire : ");
 		    	  
 		    	  
-			      for(Liaison ligne : A)
-			      System.out.println(ligne);
-			      
-
-			      System.out.println();
-			      
-			      //on affiche la liste des itinéraires
-		    	  System.out.println("Stations de l'itinéraire : ");  
-		    	  
-		    	  
-		    	  
+		    	  //on créé une liste String qui affichera la liste des stations dans l'interface graphique
 		    	  ArrayList<String> listString = new ArrayList<String>();
 		    	  
+		    	  //on fait attention à ne pas avoir de nom en double dans la liste
 			      for(Station station : L){
 			    	  if(!listString.contains(station.getNom())){
 			    		  listString.add(station.getNom());
 			    	  }
-			    	  
-//				      System.out.println(station);
-//				      listeStations.append(station.getNom() + "\n");
 			      }
 			      
 			      for(String station : listString){
@@ -759,7 +680,9 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 			      Number dist = alg.getDistance(L.get(0), L.get(L.size()-1));
 			      
 			      // le temps d'arrêt  à une station= 20 sec
-			      //on ne compte pas la station de départ et d'arrivée, ni les stations fermées
+			      //on estime que pou chaque stations traversées par le métro, il y a un temps d'arrêt de 20 secondes
+			      //on ne compte pas de temps à la station de départ et d'arrivée
+			      //et justement on ne le compte pas non plus aux les stations fermées
 			      double arret = 0;
 			      for(Station station : L){
 			    	  if(station.isFerme() == false)
@@ -768,26 +691,13 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 			      if(arret <= 0)
 			      arret = 0;
 
-			      System.out.println();
-			      System.out.println("-----------------------");
-			      System.out.println();
+
 			      
 			      //on fait la conversion du temps en minutes
 			      //on prend en compte le temps de trajet dans une liaison + le temps d'arret à une stations
 			      double tempsM = (double) dist + arret;
 			      tempsM *= 0.0166667;
 			      
-			      
-			      System.out.println("## Station de départ :");
-//			      result.append("## Station de départ :\n");
-			      System.out.println(L.get(0).getNom());
-//			      result.append(L.get(0).getNom() + "\n");
-			      System.out.println("## Station d'arrivée :");
-//			      result.append("## Station d'arrivée :\n");
-			      System.out.println(L.get(L.size()-1).getNom());
-			      System.out.println("## temps de trajet estimé :");
-			      System.out.println(Math.round(tempsM) + " minutes");
-			      System.out.println("## distance à parcourir estimée :");
 			      
 			      //les distances sont calculées à partir des coordonnées des stations
 			      //elles sont approximatives
@@ -808,6 +718,8 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 			      
 			      String distance = null;
 			      
+			      //on calcule la distance estimée grâce aux coordonnées entre les stations traversées
+			      //on veut afficher la distance en mètre ou en km selon la longueur
 			     if(d > 1000){
 			     d /= 1000;
 			     distance = d + " km";
@@ -823,7 +735,6 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 			      //on verifie le nombre de correspondance avec un compteur
 			      //et on affiche la liste
 			      result.append("\n");
-			      System.out.println("## nombre de correspondances :");
 			      result.append("## nombre de correspondances :\n");
 			      int corr = 0;
 			      List<Station> Lcorr = new ArrayList<Station>();
@@ -838,76 +749,19 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 			    	  }
 			      }
 			      
-			      System.out.print(corr);
 			      result.append(corr + "");
 			      if(corr != 0){
-			    	  System.out.println(" à :");
 			    	  result.append(" à :\n");
 			      }
 			      	      
 			      for(Station station : Lcorr){
-			    	  System.out.println(" - " + station.getNom());
+
 			    	  result.append(" - " + station.getNom() + "\n");
 			      }
-			      System.out.println();
+
 			      result.append("\n");
-			      //on affiche ensuite la liste des stations fermées
-			      System.out.println("## stations fermées :");
-			      
-			      
-			      
-//			      result.append("## stations fermées :\n");
-//			      for(Station station : l){
-//			    	  if(station.isFerme() == true){
-//			    	  System.out.println(" # " + station.getNom());
-//			    	  result.append(" # " + station.getNom() + "\n");
-//			    	  }
-//			      }
-			      System.out.println();
-			      System.out.println("-----------------------");
-			      System.out.println();
-			      
-			      
-			      
-			      //si l'utilisateur veut, il peut recalculer un nouvel itinéraire
-			      //si oui l'ancien sera alors effacé et les variables qui ont permis de calculer l'itinéraire
-			      //seront réinitialisées
-			      
-			      //les couleurs seront de nouveau par défaut et la liste des stations et celle des liaisons
-			      //sera éffacée
-			      System.out.println("Reset ?, appuyez sur 1");
-//			      int re = jk.nextInt();
-//			      if(re == 1){
-//			    	  
-//			    	  for(Liaison liaison : A){
-//				    	  liaison.setC(Color.black);
-//				      }
-	//
-//			    	  for(Station station : L){
-//				    	  station.setC(Color.red);
-//				      }
-//			    	  
-//			    	  for(Station station : l){
-//				    	  if(station.isFerme() == true)
-//				    	  station.setFerme(false);
-//				    	  station.setC(Color.red);
-//				      }
-//			    	  
-//			    	  d = 0;
-//			    	  corr = 0;
-//			    	  
-//			    	  A.clear();
-//			    	  L.clear();
-//			    	  Lcorr.clear();
-//			    	  
-//			    	  m = null;
-//			    	  n = null;
-//			    	  f = null;
-	//
-//			    	 
-//			    	  
-//			    	  
-//			    	  
+
+
 			      	}
 			      
 					        	
@@ -915,11 +769,6 @@ static DijkstraShortestPath<Station,Liaison> alg = new DijkstraShortestPath<Stat
 					        	
 			      });
 					      
-					      
 
-			      
-//			      sc.close();
-//			      jk.close();
-			      //-----------------------------------------------------------------------
 	 			}
 	}
