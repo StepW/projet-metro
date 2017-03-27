@@ -42,6 +42,14 @@ public class Liaison {
 	public void setDistance(int distance) {
 		this.distance = distance;
 	}
+	
+	public boolean isCorresp() {
+		return corresp;
+	}
+
+	public void setCorresp(boolean corresp) {
+		this.corresp = corresp;
+	}
 		
 	public Color getC() {
 		return c;
@@ -61,14 +69,6 @@ public class Liaison {
 		// 1 mètre éauivaux à environ 25.7 mètre
 		return (int) L;
 
-	}
-
-	public boolean isCorresp() {
-		return corresp;
-	}
-
-	public void setCorresp(boolean corresp) {
-		this.corresp = corresp;
 	}
 
 	@Override
